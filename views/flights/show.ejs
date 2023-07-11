@@ -1,0 +1,91 @@
+<%- include('../partials/header') %>
+<nav>
+  <a href="/flights"> All Flights</a>
+  <a href="/flights/new">Add Flight</a>
+</nav>
+<h2>Flight Details</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Airline</th>
+      <th>Airport</th>
+      <th>Flight No.</th>
+      <th>Departs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= oneFlight.airline %></td>
+      <td><%= oneFlight.airport %></td>
+      <td><%= oneFlight.flightNo %></td>
+      <td type="date"><%= oneFlight.departs%></td>
+    </tr>
+  </tbody>
+</table>
+<br /><br />
+
+<h3>Flight Destinations</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Airport</th>
+      <th>Arrival Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%oneFlight.destinations.forEach(function(d) {%>
+    <tr>
+      <td><%= d.airport %></td>
+      <td type="date"><%= d.arrival %></td>
+    </tr>
+    <%});%>
+  </tbody>
+</table>
+<br /><br />
+
+<h3>Add a Destination</h3>
+<form
+  id="destinations-form"
+  method="POST"
+  action="/flights/<%= oneFlight._id %>/destinations"
+>
+  <label id="destinations-label"
+    >Airport
+    <select name="airport">
+      <option value="AUS">AUS</option>
+      <option value="DFW">DFW</option>
+      <option value="DEN">DEN</option>
+      <option value="LAX">LAX</option>
+      <option value="SAN">SAN</option>
+    </select>
+  </label>
+  <label id="destinations-input"
+    >Arrival Time
+    <input type="datetime-local" name="arrival" />
+  </label>
+  <button type="submit">Add Destination</button>
+</form>
+
+<h3>Flight Tickets</h3>
+<a href="/flights/<%=oneFlight.id%>/tickets/new">Create a Ticket</a>
+<br /><br />
+<h3>Tickets</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Seat</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%ticketsForFlight.forEach(function(t) {%>
+    <tr>
+      <td><%= t.seat %></td>
+      <td>$<%= t.price %></td>
+    </tr>
+    <%});%>
+  </tbody>
+</table>
+<br /><br />
+
+<%- include('../partials/footer') %>
